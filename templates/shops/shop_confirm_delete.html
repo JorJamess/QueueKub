@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Deactivate Shop — QueueKub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="h4 mb-3">Deactivate "{{ shop.name }}"?</h1>
+        <p class="text-muted">
+          The shop will be hidden from customers. You can reactivate it later from the Django admin.
+        </p>
+        <form method="post">
+          {% csrf_token %}
+          <a href="{% url 'shops:detail' shop.pk %}" class="btn btn-outline-secondary">Cancel</a>
+          <button type="submit" class="btn btn-danger">Deactivate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

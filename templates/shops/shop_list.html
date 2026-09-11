@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Shops — QueueKub{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Browse Shops</h1>
+
+<form method="get" class="row g-2 mb-4">
+  <div class="col-sm-8 col-md-6">
+    <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search by shop name or address">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+  {% if query %}
+    <div class="col-auto">
+      <a href="{% url 'shops:list' %}" class="btn btn-outline-secondary">Clear</a>
+    </div>
+  {% endif %}
+</form>
+
+{% if page_obj %}
+  <div class="row g-3">
+    {% for shop in page_obj %}
+      <div class="col-sm-6 col-lg-4">
+        <div class="card shop-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title">{{ shop.name }}</h5>
+              {% if shop.is_open_now %}
+                <span class="badge badge-open">Open</span>
+              {% else %}
+                <span class="badge badge-closed">Closed</span>
+              {% endif %}
+            </div>
+            <p class="card-text text-muted small mb-1">{{ shop.address }}</p>
+            <p class="card-text small text-muted">{{ shop.open_time|time:"H:i" }} - {{ shop.close_time|time:"H:i" }}</p>
+            <a href="{% url 'shops:detail' shop.pk %}" class="btn btn-sm btn-outline-primary">View Shop</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="text-muted">No shops found.</p>
+{% endif %}
+{% endblock %}
