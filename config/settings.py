@@ -5,6 +5,7 @@ Django settings for config project.
 from pathlib import Path
 
 import environ
+from django.contrib.messages import constants as message_constants
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -143,6 +144,11 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+MESSAGE_TAGS = {
+    message_constants.ERROR: "danger",
+}
 
 
 # Auth redirects

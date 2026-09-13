@@ -3,31 +3,31 @@
 {% block title %}QueueKub — Skip the Line{% endblock %}
 
 {% block content %}
-<div class="p-5 mb-4 bg-white rounded-3 shadow-sm text-center">
-  <h1 class="display-5 fw-bold">Book Your Queue Online</h1>
+<div class="hero mb-5">
+  <h1 class="display-5 mb-3">Book Your Queue Online</h1>
   <p class="col-md-8 mx-auto fs-5 text-muted">
     Find shops near you, check the current queue, and reserve your spot — no more standing in line.
   </p>
   <a href="{% url 'shops:list' %}" class="btn btn-primary btn-lg">Browse Shops</a>
   {% if not user.is_authenticated %}
-    <a href="{% url 'accounts:register' %}" class="btn btn-outline-primary btn-lg">Get Started</a>
+  <a href="{% url 'accounts:register' %}" class="btn btn-outline-primary btn-lg">Get Started</a>
   {% endif %}
 </div>
 
 {% if featured_shops %}
-  <h2 class="h4 mb-3">Featured Shops</h2>
-  <div class="row g-3">
-    {% for shop in featured_shops %}
-      <div class="col-sm-6 col-lg-4">
-        <div class="card shop-card">
-          <div class="card-body">
-            <h5 class="card-title">{{ shop.name }}</h5>
-            <p class="card-text text-muted small">{{ shop.address }}</p>
-            <a href="{% url 'shops:detail' shop.pk %}" class="btn btn-sm btn-outline-primary">View Shop</a>
-          </div>
-        </div>
+<h2 class="h4 mb-3">Featured Shops</h2>
+<div class="row g-3">
+  {% for shop in featured_shops %}
+  <div class="col-sm-6 col-lg-4">
+    <div class="card shop-card">
+      <div class="card-body">
+        <h5 class="card-title">{{ shop.name }}</h5>
+        <p class="card-text text-muted small">{{ shop.address }}</p>
+        <a href="{% url 'shops:detail' shop.pk %}" class="btn btn-sm btn-outline-primary">View Shop</a>
       </div>
-    {% endfor %}
+    </div>
   </div>
+  {% endfor %}
+</div>
 {% endif %}
 {% endblock %}
